@@ -4,6 +4,7 @@ import com.example.libraryproject.model.Book;
 import com.example.libraryproject.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import org.springframework.web.servlet.ModelAndView;
 
 //@RestController
 @RequestMapping("/books")
@@ -21,8 +23,10 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping
-    public List<Book> getAllBooks() {
-        return bookService.getAllBooks();
+    public String getAllBooks(Model model) {
+        model.addAttribute("books", bookService.getAllBooks());
+        model.addAttribute("book", new Book());
+        return "books";
     }
 
     @GetMapping("/byname")
@@ -50,11 +54,10 @@ public class BookController {
 //        return "index.html";
 //    }
 
-    @PostMapping("/book-form")
-    public String bookPost(@ModelAttribute("book") Book book, BindingResult bindingResult/*, Model model*/) {
-//        model.addAttribute("book", book);
+    @PostMapping("/add")
+    public String bookPost(@ModelAttribute("book") Book book, BindingResult bindingResult) {
         bookService.createBook(book);
-        return "index.html";
+        return "redirect:/books";
     }
 
 }

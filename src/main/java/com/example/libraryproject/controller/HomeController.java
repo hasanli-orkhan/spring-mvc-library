@@ -10,8 +10,7 @@ public class HomeController {
 
 
     @GetMapping
-    public String home(Model model) {
-        model.addAttribute("book", new Book());
+    public String home() {
         return "index";
     }
 }

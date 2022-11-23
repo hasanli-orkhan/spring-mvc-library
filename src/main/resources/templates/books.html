@@ -26,7 +26,24 @@
         <header class="masthead">
             <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
                 <div class="d-flex justify-content-center">
+                    <table>
+                        <tr>
+                            <th>Book Name</th>
+                            <th>Genre</th>
+                            <th>Author</th>
+                        </tr>
+                        <tr th:each="book : ${books}">
+                            <td th:text="${book.name}"></td>
+                            <td th:text="${book.genre}"></td>
+                         </tr>
 
+                    </table>
+
+                    <form th:action="@{/books/add}" th:object="${book}" method="post">
+                        <input type="text" th:field="*{name}" />
+                        <input type="text" th:field="*{genre}" />
+                        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+                    </form>
                 </div>
             </div>
         </header>
